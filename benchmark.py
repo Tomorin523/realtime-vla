@@ -1,7 +1,7 @@
 import torch
 from pi0_infer import Pi0Inference
 import time
-
+## Benchmark Pi0Inference
 if __name__ == "__main__":
     import argparse
     import numpy as np
