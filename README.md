@@ -21,11 +21,19 @@ To match camera speeds, you should consider using **30fps** for one or two views
 
 ## What's NEW!
 
+- [2026/02] 🔥 Added DM0 Triton inference: `dm0_infer.py` (New high-speed vla model support).
 - [2026/01] 🔥 Added **Pi05 Triton inference**: `pi05_infer.py` (major upgrade; Pi0 + Pi05 supported).
 - [2026/01] 🔥 Added `test.py` for **Triton vs JAX** correctness/consistency checks, supporting **both Pi0 and Pi05** (MAE + per-dimension MAE).
 - [2026/01] 🔥 Added a **benchmark matrix**: RTX **4090/5090** × **1/2/3 views** × **Pi0/Pi05** × **Triton**.
 
 ## Benchmark Matrix
+
+| Module | RTX 5090 (3 views) |
+|---|---|
+| Vision encoder | 35.3ms |
+| KV cache LLM | 10.1ms |
+| Action expert | 11.2ms |
+| Module sum | 56.6ms |
 
 | Model / Backend | RTX 4090 (1 view) | RTX 4090 (2 views) | RTX 4090 (3 views) | RTX 5090 (1 view) | RTX 5090 (2 views) | RTX 5090 (3 views) |
 |---|---|---|---|---|---|---|
