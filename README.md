@@ -32,7 +32,7 @@ To match camera speeds, you should consider using **30fps** for one or two views
 |---|---|---|---|---|---|---|
 | Pi0 Triton | 20.0ms | 27.3ms | 36.8ms | 17.6ms | 24.0ms | 31.9ms |
 | Pi05 Triton | 22.1ms | 29.2ms | 38.9ms | 20.1ms | 26.6ms | 34.2ms |
-| DM0 |  |  |  |  |  | 55.8ms |
+| DM0 Triton |  |  |  |  |  | 55.8ms |
 
 ## How to Use
 
