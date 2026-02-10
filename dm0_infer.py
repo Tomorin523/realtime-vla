@@ -963,7 +963,7 @@ class DB0Config:
     diffusion_steps: int = 10
 
 class DM0Inference:
-    def __init__(self, weight_path, num_images=3, max_lang_len=100, device="cuda"):
+    def __init__(self, checkpoint, num_images=3, max_lang_len=100, device="cuda"):
         config = DB0Config()
         self.device = device
         self.num_images = num_images
@@ -1070,9 +1070,8 @@ class DM0Inference:
             'conv1_buf': self.buffers['vision_conv1_buf'],
             'x_2d': self.buffers['vision_x_2d'],
         }
-        loaded = torch.load(weight_path, map_location=device, weights_only=True)
-        for k in self.weights:
-            self.weights[k].copy_(loaded[k])
+        for k, v in checkpoint.items():
+            self.weights[k].copy_(v)
         self._compute_rope_weights(config.llm_rope_theta)
         self.freqs_cos, self.freqs_sin = compute_2d_freqs_cache(device=device)
         self.graph = torch.cuda.CUDAGraph()

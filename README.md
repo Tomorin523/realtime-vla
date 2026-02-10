@@ -45,7 +45,8 @@ To match camera speeds, you should consider using **30fps** for one or two views
 
 The intended usage is to directly copy the inference file into your project:
 - `pi0_infer.py`: Pi0 Triton inference
-- `pi05_infer.py`: **Pi05 Triton inference (new)**
+- `pi05_infer.py`: Pi05 Triton inference
+- `dm0_infer.py`: **DM0 Triton inference (new)**
 
 ### Pi0 Triton inference
 
@@ -85,13 +86,31 @@ output_actions = infer.forward(
 )
 ```
 
+### DM0 Triton inference
+
+```python
+converted_checkpoint = torch.load('converted_checkpoint.pkl', map_location=device, weights_only=True)
+
+from dm0_infer import DM0Inference
+
+infer = DM0Inference(
+  checkpoint=converted_checkpoint,
+  num_images=number_of_images,
+)
+output_actions = infer.forward(
+   images, # (number_of_images, 3, 728, 728)
+   input_ids, # (length_of_language,)
+   diffusion_input_noise_bfloat16, # (length_of_trajectory, 32)
+)
+```
+
 ### Convert from JAX checkpoint
 
 ```bash
 pytho3 convert_from_jax.py \
    --jax_path /path/to/checkpoint/folder\
    --output converted_checkpoint.pkl\
-   --prompt "your task prompt"
+   --prompt "your task prompt"\
    --tokenizer_path /path/to/paligemma-3b-pt-224
 ```
 
@@ -99,8 +118,14 @@ pytho3 convert_from_jax.py \
 python3 convert_from_jax_pi05.py \
    --jax_path /path/to/checkpoint/folder\
    --output converted_checkpoint.pkl\
-   --prompt "your task prompt"
+   --prompt "your task prompt"\
    --tokenizer_path /path/to/paligemma-3b-pt-224
+```
+
+```bash
+python3 convert_dm0_weight.py \
+   --model_path /path/to/checkpoint/folder\
+   --output converted_checkpoint.pkl
 ```
 
 The code is specifically tuned on RTX 4090, CUDA 12.6, but it should work on similar platforms so long as torch and triton themselves work.
@@ -109,7 +134,7 @@ The code is specifically tuned on RTX 4090, CUDA 12.6, but it should work on sim
 
 You can check the inference time on you local machine by
 ```bash
-python3 benchmark.py --num_views 2 --prompt_len 0 --chunk_size 63 --model_version pi0
+python3 benchmark.py --num_views 3 --prompt_len 0 --chunk_size 50 --model_version dm0
 ```
 
 ## Correctness / Consistency Testing (Pi0 & Pi05)
