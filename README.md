@@ -1,4 +1,4 @@
-# Running VLA in Real Time (Pi0 + Pi05)
+# Running VLA in Real Time (Pi0 + Pi05 + DM0)
 
 This project provides accelerated inference kernels of **Pi0 and Pi05** models from the [OpenPI](https://github.com/Physical-Intelligence/openpi) project.
 
