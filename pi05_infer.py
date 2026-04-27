@@ -119,7 +119,7 @@ def scaled_matmul_bias_rope_qkv(
             x = x * norm_factor[:, None]
             w = tl.load(
                 weight_qkv_ptr + offs_k[:, None] * ((num_heads + 2) * head_dim) + offs_j,
-                mask = offs_k[:, None] < features, other = 0
+                mask = (offs_k[:, None] < features) & (offs_j < (num_heads + 2) * head_dim), other = 0
             )
             accumulator = tl.dot(x, w, accumulator)
 
